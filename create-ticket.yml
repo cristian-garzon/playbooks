@@ -5,9 +5,9 @@
                 serviceDeskId: 83
                 requestTypeId: 2129
                 requestFieldValues:
-                        customerfield_13202:
+                        customfield_13202:
                                 value: "{{value_13202}}"
-                        customerfield_13942:
+                        customfield_13942:
                                 value: "{{value_13942}}"
                         customfield_13356: "{{value_13356}}"
                         customfield_13971:
@@ -26,13 +26,12 @@
                     url: "{{url}}"
                     method: POST
                     body: "{{json_data|to_json}}"
-                    status_code: 201
+                    status_code: [201,404,400,401]
                     username: "{{username}}"
                     password: "{{password}}"
                     force_basic_auth: yes
                     headers:
                             Accept: "application/json"
-                            Authorization: Basic "{{token}}"
                             Content-type: application/json
             register: result
           - name: get response

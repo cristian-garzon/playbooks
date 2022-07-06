@@ -1,0 +1,37 @@
+- name: create repo
+  hosts: localhost
+  vars:
+        json_data:
+                serviceDeskId: 83
+                requestTypeId: 2129
+                requestFieldValues:
+                        customerfield_13202:
+                                value: {{value_13202}}
+                        customerfield_13942:
+                                value: {{value_13942}}
+                        customfield_13356: {{ value_13356 }}
+                        customfield_13971:
+                                value: {{value_13971}}
+                        customfield_14103:
+                                value: {{value_14103}}
+                        customfield_13970:
+                                value: {{value_13970}}
+                        description: {{value_description}}
+                        customfield_13383:
+                                accountId: {{accountId}}
+
+  tasks:
+          - name: creation repository
+            ansible.builtin.uri:
+                    url: {{url}}
+                    method: POST
+                    body: "{{json_data|to_json}}"
+                    status_code: 201
+                    headers:
+                            Accept: "application/json"
+                            Authorization: Basic {{token}}
+                            Content-type: application/json
+            register: result
+          - name: get response
+            ansible.builtin.debug:
+                    var: result.json

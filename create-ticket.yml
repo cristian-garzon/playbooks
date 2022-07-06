@@ -24,11 +24,12 @@
           - name: creation repository
             ansible.builtin.uri:
                     url: "{{url}}"
+                    user: "{{username}}"
+                    password: "{{password}}"
                     method: POST
                     body: "{{json_data|to_json}}"
                     status_code: [201,404,400,401]
-                    username: "{{username}}"
-                    password: "{{password}}"
+
                     force_basic_auth: yes
                     headers:
                             Accept: "application/json"

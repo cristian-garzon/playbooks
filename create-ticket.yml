@@ -29,6 +29,7 @@
                     status_code: 201
                     username: "{{username}}"
                     password: "{{password}}"
+                    force_basic_auth: yes
                     headers:
                             Accept: "application/json"
                             Authorization: Basic "{{token}}"

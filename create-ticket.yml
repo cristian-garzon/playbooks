@@ -1,40 +1,38 @@
-- name: create repo
+- name: Create ticket repository
   hosts: localhost
   vars:
-        json_data:
-                serviceDeskId: 83
-                requestTypeId: 2129
-                requestFieldValues:
-                        customfield_13202:
-                                value: "{{value_13202}}"
-                        customfield_13942:
-                                value: "{{value_13942}}"
-                        customfield_13356: "{{value_13356}}"
-                        customfield_13971:
-                                value: "{{value_13971}}"
-                        customfield_14103:
-                                value: "{{value_14103}}"
-                        customfield_13970:
-                                value: "{{value_13970}}"
-                        description: "{{value_description}}"
-                        customfield_13383:
-                                accountId: "{{accountId}}"
-
-  tasks:
-          - name: creation repository
-            ansible.builtin.uri:
-                    url: "{{url}}"
-                    user: "{{username}}"
-                    password: "{{password}}"
-                    method: POST
-                    body: "{{json_data|to_json}}"
-                    status_code: [201,404,400,401]
-
-                    force_basic_auth: yes
-                    headers:
-                            Accept: "application/json"
-                            Content-type: application/json
-            register: result
-          - name: get response
-            ansible.builtin.debug:
-                    var: result.json
+    data:
+      serviceDeskId: 83
+      requestTypeId: 2129
+      requestFieldValues:
+        customfield_13202:
+          value: "{{ action }}"
+        customfield_13356: "{{ repo_name }}"
+        customfield_13942:
+          value: "{{ bitbucket_project }}"
+        customfield_13971:
+          value: "{{ branching_model }}"
+        customfield_14103:
+          value: "{{ owner_team }}"
+        customfield_13970:
+          value: "{{ belongs_to_ms }}"
+        customfield_13383:
+          accountId: "{{ accountId }}"
+        description: "{{ description }}"
+      raiseOnBehalfOf: "{{ accountId }}"
+    tasks:
+    - name: Make ticket
+      ansible.builtin.uri:
+        url: "{{ url }}"
+        user: "{{ username }}"
+        password: "{{ password }}"
+        method: POST
+        body: "{{ data | to_json }}"
+        status_code: 201
+        force_basic_auth: yes
+        headers:
+          Content-Type: application/json
+        register: result
+    - name: Get response
+      ansible.builtin.debug:
+        var: result

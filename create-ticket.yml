@@ -6,7 +6,7 @@
                 requestTypeId: 2129
                 requestFieldValues:
                         customfield_13202:
-                                value: "{{ action }}"
+                                value: "{{ action_repo }}"
                         customfield_13942:
                                 value: "{{ bitbucket_project }}"
                         customfield_13356: "{{ repo_name }}"
@@ -19,7 +19,7 @@
                         description: "{{ description }}"
                         customfield_13383:
                                 accountId: "{{ accountId }}"
-                        raiseOnBehalfOf: "{{ accountId }}"
+               raiseOnBehalfOf: "{{ accountId }}"
 
   tasks:
           - name: creation repository

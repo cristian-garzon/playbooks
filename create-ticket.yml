@@ -1,38 +1,41 @@
-- name: Create ticket repository
+- name: create repo
   hosts: localhost
   vars:
-    data:
-      serviceDeskId: 83
-      requestTypeId: 2129
-      requestFieldValues:
-        customfield_13202:
-          value: "{{ action }}"
-        customfield_13356: "{{ repo_name }}"
-        customfield_13942:
-          value: "{{ bitbucket_project }}"
-        customfield_13971:
-          value: "{{ branching_model }}"
-        customfield_14103:
-          value: "{{ owner_team }}"
-        customfield_13970:
-          value: "{{ belongs_to_ms }}"
-        customfield_13383:
-          accountId: "{{ accountId }}"
-        description: "{{ description }}"
-      raiseOnBehalfOf: "{{ accountId }}"
+        json_data:
+                serviceDeskId: 83
+                requestTypeId: 2129
+                requestFieldValues:
+                        customfield_13202:
+                                value: "{{ action }}"
+                        customfield_13942:
+                                value: "{{ bitbucket_project }}"
+                        customfield_13356: "{{ repo_name }}"
+                        customfield_13971:
+                                value: "{{ branching_model }}"
+                        customfield_14103:
+                                value: "{{ owner_team }}"
+                        customfield_13970:
+                                value: "{{ belongs_to_ms }}"
+                        description: "{{ description }}"
+                        customfield_13383:
+                                accountId: "{{ accountId }}"
+                        raiseOnBehalfOf: "{{ accountId }}"
+
   tasks:
-    - name: Make ticket
-      ansible.builtin.uri:
-        url: "{{ url }}"
-        user: "{{ username }}"
-        password: "{{ password }}"
-        method: POST
-        body: "{{ data | to_json }}"
-        status_code: [201,400,404,403,401]
-        force_basic_auth: yes
-        headers:
-          Content-Type: application/json
-        register: result
-    - name: Get response
-      ansible.builtin.debug:
-        var: result
+          - name: creation repository
+            ansible.builtin.uri:
+                    url: "{{url}}"
+                    user: "{{username}}"
+                    password: "{{password}}"
+                    method: POST
+                    body: "{{json_data|to_json}}"
+                    status_code: [201,404,400,401]
+
+                    force_basic_auth: yes
+                    headers:
+                            Accept: "application/json"
+                            Content-type: application/json
+            register: result
+          - name: get response
+            ansible.builtin.debug:
+                    var: result.json

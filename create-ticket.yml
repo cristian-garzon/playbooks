@@ -28,7 +28,7 @@
         password: "{{ password }}"
         method: POST
         body: "{{ data | to_json }}"
-        status_code: 201
+        status_code: [201,400,404,403,401]
         force_basic_auth: yes
         headers:
           Content-Type: application/json

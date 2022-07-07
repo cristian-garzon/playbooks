@@ -4,6 +4,7 @@
         json_data:
                 serviceDeskId: 83
                 requestTypeId: 2129
+                raiseOnBehalfOf: "{{ accountId }}"
                 requestFieldValues:
                         customfield_13202:
                                 value: "{{ action_repo }}"
@@ -19,8 +20,6 @@
                         description: "{{ description }}"
                         customfield_13383:
                                 accountId: "{{ accountId }}"
-               raiseOnBehalfOf: "{{ accountId }}"
-
   tasks:
           - name: creation repository
             ansible.builtin.uri:

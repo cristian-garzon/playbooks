@@ -20,7 +20,7 @@
           accountId: "{{ accountId }}"
         description: "{{ description }}"
       raiseOnBehalfOf: "{{ accountId }}"
-    tasks:
+  tasks:
     - name: Make ticket
       ansible.builtin.uri:
         url: "{{ url }}"

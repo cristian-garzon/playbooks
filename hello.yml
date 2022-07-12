@@ -3,4 +3,4 @@
   tasks:
           - name: hello world
             debug:
-                msg: "hello {{ NAME }}"
+                msg: "hello {{ service_name }}"
